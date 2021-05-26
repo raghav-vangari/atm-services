@@ -23,15 +23,15 @@ public class AtmController {
 	
 	@GetMapping("/atm/{city}")
 	public AtmList getAtmListByCity(@PathVariable("city") String city) {
-		if(!city.isBlank()) {
-			return atmService.getAtmListByCity(city);
-		} else {
+		if(city == null || city.isEmpty() || city.trim().isEmpty()) {
 			Status status = new Status();
 			AtmList atmList = new AtmList();
 			status.setCode(AppConstants.MISSING_300);
 			status.setMessage(AppConstants.SEND_CITY_NAME);
 			atmList.setStatus(status);
 			return atmList;
+		} else {
+			return atmService.getAtmListByCity(city);
 		}
 	}
 }
